@@ -1,95 +1,106 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import { useState } from 'react'
+import { Container, TextField, Button, Box, Typography, Paper } from '@mui/material';
 
 export default function Home() {
+  const [question, setQuestion] = useState('');
+  const [responseText, setResponseText] = useState('');
+
+  const sampleText = `
+  Trees are perennial plants characterized by an elongated stem, or trunk, that supports leaves and branches. They play a crucial role in ecosystems and provide numerous benefits, including:
+
+1. **Oxygen Production**: Through photosynthesis, trees convert carbon dioxide into oxygen, making them essential for maintaining air quality.
+
+2. **Habitat**: Trees provide habitat and food for a diverse array of wildlife, including birds, mammals, insects, and fungi.
+
+3. **Climate Regulation**: Trees influence local and global climates by absorbing carbon dioxide, a significant greenhouse gas, thus helping to mitigate climate change.
+
+4. **Soil Conservation**: Tree roots help anchor soil, preventing erosion and maintaining soil health. They also contribute to nutrient cycling.
+
+5. **Water Cycle**: Trees play a role in the water cycle by absorbing and releasing water through transpiration, which can affect local humidity and precipitation patterns.
+
+6. **Aesthetic and Recreational Value**: Trees enhance landscapes, provide shade, and serve as sites for recreation, relaxation, and cultural activities.
+
+7. **Economic Value**: Trees provide timber, fruit, nuts, and other resources that contribute to local and global economies.
+
+There are many different types of trees, which can be categorized into two main groups: deciduous trees, which shed their leaves annually, and coniferous trees, which typically keep their leaves (needles) year-round. Trees vary greatly in size, shape, and habitat preferences, with species adapted to different environmental conditions around the world.
+`
+
+  async function run() {
+    try {
+      const response = await fetch('/api/openai', {
+        method: 'POST', // Make sure to use POST
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question }), // Send the input question
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      setResponseText(result.text);
+      console.log(result.text.message.content)
+      output.innerText = result.text.message.content
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setResponseText('An error occurred');
+    }
+  }
+
+  function runSample() {
+    output.innerText = sampleText
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+<Container maxWidth="sm" sx={{bgcolor:"#2F2F2F"}}>
+      <Box 
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Chat Bot
+        </Typography>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <Paper 
+          elevation={3} 
+          sx={{ 
+            width: '100%', 
+            p: 2, 
+            mb: 2,
+            flexGrow: 1, 
+            overflowY: 'auto', 
+          }}
+        >
+          <Typography variant="body1" id="output">
+          </Typography>
+        </Paper>
+
+        <TextField
+          label="Type your message"
+          variant="outlined"
+          fullWidth
+          sx={{label:{color: "white"},input:{color:"white"} }}
+          onChange={(e) => setQuestion(e.target.value)}
         />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={run}
+          sx={{ mt: 2, mb: 2 }}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          Send
+        </Button>
+      </Box>
+    </Container>
   );
 }
