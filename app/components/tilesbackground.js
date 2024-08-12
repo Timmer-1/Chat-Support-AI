@@ -1,14 +1,10 @@
-// pages/tiles.js
-
-'use client'
-
 import { useState, useEffect } from 'react';
 import styles from './page.module.css'
 import Head from 'next/head';
 import {Box} from '@mui/material'
 import Navbar from "@/app/components/navbar"
 
-const TilesPage = () => {
+const Tilesbackground = () => {
     const [tiles, setTiles] = useState([]);
 
     useEffect(() => {
@@ -18,12 +14,6 @@ const TilesPage = () => {
                 `Tile ${prevElements.length + 1}`,
             ]);
         }  
-        // const container = document.querySelector("#container");
-        // const tile = document.querySelector(".tile");
-
-        // for (let i = 0; i < 1599; i++) {
-        // container.appendChild(tile.cloneNode());
-        // }
   }, []);
 
   return (
@@ -57,4 +47,4 @@ const TilesPage = () => {
   );
 };
 
-export default TilesPage;
+export default Tilesbackground;
