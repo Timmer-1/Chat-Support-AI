@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from './page.module.css'
-import Head from 'next/head';
-import {Box} from '@mui/material'
-import Navbar from "@/app/components/navbar"
+import styles from './tilesbackground.module.css'
 
 const Tilesbackground = () => {
     const [tiles, setTiles] = useState([]);
@@ -18,31 +15,12 @@ const Tilesbackground = () => {
 
   return (
     <>
-      <Head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-      </Head>
-      <Navbar />
       <div id={styles.container}>
         {tiles.map((tile, index) => (
           <div key={index} class={styles.tile}>
           </div>
         ))}
        </div>
-       <Box
-      sx={{
-        p: 3,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0, 0, 255, 0.2)', // Blue tint
-        backdropFilter: 'blur(10px)', // Blur everything behind
-        border: '2px solid #003366', // Dark blue outline
-        color: '#ffffff',
-        zIndex: 9999, // Ensures the box is on top of other elements
-      }}
-    >
-      <span>Hello there 😁, choose from a variety of chat bots🧙‍♂️</span>
-    </Box>
     </>
   );
 };

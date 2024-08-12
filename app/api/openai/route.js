@@ -11,7 +11,7 @@ export async function POST(req) {
       messages: [{ role: "system", content: question }],
       model: "gpt-4o-mini",
     })
-    return new Response(JSON.stringify({ text: response.choices[0] }), {
+    return new Response(JSON.stringify({ text: response.choices[0].message.content }), {
         headers: { 'Content-Type': 'application/json' },
       });
   } catch (error) {

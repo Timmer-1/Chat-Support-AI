@@ -1,0 +1,94 @@
+/* styles/tiles.css */
+/* Ensure #container is positioned behind other content */
+#container {
+    width: 140rem;
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-rows: repeat(40, 1fr);
+    grid-template-columns: repeat(40, 1fr);
+    position: absolute; /* Position the container absolutely */
+    top: 0; /* Align it to the top */
+    left: 0; /* Align it to the left */
+    transform: rotateX(50deg) rotateY(-5deg) rotateZ(20deg) scale(1.25);
+    z-index: -1; /* Set a negative z-index to place it behind other elements */
+  }
+  
+  #container:after,
+  #container:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* Ensure it doesn't interfere with clicking */
+  }
+  
+  #container:before {
+    z-index: 2; /* Make sure this is below other content */
+    background-image: url("https://assets.codepen.io/1468070/plus-pattern-center.png");
+    background-size: 5%;
+    background-repeat: repeat;
+    opacity: 0.25;
+  }
+  
+  #container:after {
+    z-index: 3; /* Ensure this is above the before pseudo-element */
+    background: radial-gradient(circle, transparent 25%, rgb(var(--background-rgb)) 80%);
+  }
+  
+  
+  .tile {  
+    border: 1px solid rgb(255 255 255 / 25%);
+    transition: background-color 1500ms;
+  }
+  
+  .tile:hover {
+    transition-duration: 0ms;
+  }
+  
+  .tile:nth-child(4n):hover {
+    background-color: rgb(235, 87, 87); /* Darker Red */
+  }
+  
+  .tile:nth-child(4n + 1):hover {
+    background-color: rgb(41, 171, 226); /* Darker Blue */
+  }
+  
+  .tile:nth-child(4n + 2):hover {
+    background-color: rgb(56, 200, 110); /* Darker Green */
+  }
+  
+  .tile:nth-child(4n + 3):hover {
+    background-color: rgb(237, 202, 54); /* Darker Yellow */
+  }
+  
+  .tile:nth-child(7n):hover {
+    background-color: rgb(72, 202, 255); /* Lighter Blue */
+  }
+  
+  .tile:nth-child(7n + 3):hover {
+    background-color: rgb(98, 245, 158); /* Lighter Green */
+  }
+  
+  .tile:nth-child(7n + 5):hover {
+    background-color: rgb(255, 240, 90); /* Lighter Yellow */
+  }
+  
+  .tile:nth-child(7n + 6):hover {
+    background-color: rgb(255, 132, 132); /* Lighter Red */
+  }
+  
+  .tile:nth-child(11n + 1):hover {
+    background-color: rgb(235, 87, 87); /* Darker Red */
+  }
+  
+  .tile:nth-child(11n + 4):hover {
+    background-color: rgb(41, 171, 226); /* Darker Blue */
+  }
+  
+  .tile:nth-child(11n + 7):hover {
+    background-color: rgb(56, 200, 110); /* Darker Green */
+  }
+  
+  .tile:nth-child(11n + 10):hover {
+    background-color: rgb(237, 202, 54); /* Darker Yellow */
+  }
+  
